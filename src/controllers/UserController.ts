@@ -67,7 +67,7 @@ export default class UserController {
   update = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
-      const { name, password } = req.body;
+      const { name, email, password } = req.body;
 
       const user = await User.findByPk(id);
       if (!user) {
@@ -75,7 +75,19 @@ export default class UserController {
         return;
       }
 
-      await user.update({ name, ...(password && { password }) });
+      if (email && email !== user.email) {
+        const emailExists = await User.findOne({ where: { email } });
+        if (emailExists) {
+          res.status(400).json({ message: 'Este email já está em uso' });
+          return;
+        }
+      }
+
+      await user.update({ 
+        ...(name && { name }), 
+        ...(email && { email }), 
+        ...(password && { password }) 
+      });
 
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'default_secret', {
         expiresIn: '1d',
