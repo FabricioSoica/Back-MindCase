@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "mindcase-collection",
+		"name": "MindCase Blog API",
+		"description": "API do blog MindCase",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuários",
+			"item": [
+				{
+					"name": "Registrar Usuário",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Seu Nome\",\n    \"email\": \"seu@email.com\",\n    \"password\": \"sua_senha\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/register",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["api", "users", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"seu@email.com\",\n    \"password\": \"sua_senha\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/login",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["api", "users", "login"]
+						}
+					}
+				},
+				{
+					"name": "Atualizar Usuário",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Novo Nome\",\n    \"email\": \"novo@email.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/:id",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["api", "users", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Artigos",
+			"item": [
+				{
+					"name": "Listar Artigos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/articles?page=1&limit=10",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["api", "articles"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Retorna uma lista paginada de artigos. Cada artigo inclui o caminho da imagem em featuredImage que pode ser acessado via /uploads/nome-do-arquivo"
+					}
+				},
+				{
+					"name": "Buscar Artigo por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/articles/:id",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["api", "articles", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Retorna um artigo específico. O campo featuredImage contém o nome do arquivo que pode ser acessado via /uploads/nome-do-arquivo"
+					}
+				},
+				{
+					"name": "Criar Artigo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Título do Artigo",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Conteúdo do artigo...",
+									"type": "text"
+								},
+								{
+									"key": "featuredImage",
+									"type": "file",
+									"src": "/caminho/para/sua/imagem.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/articles",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["api", "articles"]
+						},
+						"description": "Cria um novo artigo. A imagem será salva na pasta uploads e o nome do arquivo será armazenado no banco. A imagem pode ser acessada via /uploads/nome-do-arquivo"
+					}
+				},
+				{
+					"name": "Atualizar Artigo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Novo Título",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Novo conteúdo...",
+									"type": "text"
+								},
+								{
+									"key": "featuredImage",
+									"type": "file",
+									"src": "/caminho/para/nova/imagem.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/articles/:id",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["api", "articles", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Atualiza um artigo existente. Se uma nova imagem for enviada, ela será salva na pasta uploads e o nome do arquivo será atualizado no banco. A imagem pode ser acessada via /uploads/nome-do-arquivo"
+					}
+				},
+				{
+					"name": "Deletar Artigo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/articles/:id",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "3000",
+							"path": ["api", "articles", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "seu_token_jwt_aqui"
+		}
+	]
+} 
