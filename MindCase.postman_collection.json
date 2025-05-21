@@ -21,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Seu Nome\",\n    \"email\": \"seu@email.com\",\n    \"password\": \"sua_senha\"\n}"
+							"raw": "{\n    \"name\": \"Seu Nome\",\n    \"email\": \"seu@email.com\",\n    \"password\": \"Senha@123\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/users/register",
@@ -29,7 +29,8 @@
 							"host": ["localhost"],
 							"port": "3000",
 							"path": ["api", "users", "register"]
-						}
+						},
+						"description": "Registra um novo usuário. A senha deve conter:\n- Pelo menos 8 caracteres\n- Uma letra maiúscula\n- Um caractere especial (!@#$%^&*(),.?\":{}|<>)\n\nExemplos de senhas válidas:\n- Senha@123\n- Teste#2024\n- Abc@1234"
 					}
 				},
 				{
@@ -44,7 +45,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"seu@email.com\",\n    \"password\": \"sua_senha\"\n}"
+							"raw": "{\n    \"email\": \"seu@email.com\",\n    \"password\": \"Senha@123\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/users/login",
@@ -52,7 +53,8 @@
 							"host": ["localhost"],
 							"port": "3000",
 							"path": ["api", "users", "login"]
-						}
+						},
+						"description": "Realiza o login do usuário. Retorna um token JWT que deve ser usado nas requisições protegidas."
 					}
 				},
 				{
@@ -71,7 +73,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Novo Nome\",\n    \"email\": \"novo@email.com\"\n}"
+							"raw": "{\n    \"name\": \"Novo Nome\",\n    \"password\": \"NovaSenha@123\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/users/:id",
@@ -85,7 +87,8 @@
 									"value": "1"
 								}
 							]
-						}
+						},
+						"description": "Atualiza o nome e/ou senha do usuário. A senha é opcional, mas se fornecida deve seguir os mesmos requisitos do registro:\n- Pelo menos 8 caracteres\n- Uma letra maiúscula\n- Um caractere especial (!@#$%^&*(),.?\":{}|<>)\n\nExemplos de senhas válidas:\n- NovaSenha@123\n- Teste#2024\n- Abc@1234"
 					}
 				}
 			]
@@ -136,7 +139,7 @@
 								}
 							]
 						},
-						"description": "Retorna um artigo específico. O campo featuredImage contém o nome do arquivo que pode ser acessado via /uploads/nome-do-arquivo"
+						"description": "Retorna um artigo específico. O campo featuredImage contém o caminho da imagem que pode ser acessado via /uploads/nome-do-arquivo"
 					}
 				},
 				{
@@ -176,7 +179,7 @@
 							"port": "3000",
 							"path": ["api", "articles"]
 						},
-						"description": "Cria um novo artigo. A imagem será salva na pasta uploads e o nome do arquivo será armazenado no banco. A imagem pode ser acessada via /uploads/nome-do-arquivo"
+						"description": "Cria um novo artigo. A imagem será salva na pasta uploads e o caminho será armazenado no banco. A imagem pode ser acessada via /uploads/nome-do-arquivo"
 					}
 				},
 				{
@@ -222,7 +225,7 @@
 								}
 							]
 						},
-						"description": "Atualiza um artigo existente. Se uma nova imagem for enviada, ela será salva na pasta uploads e o nome do arquivo será atualizado no banco. A imagem pode ser acessada via /uploads/nome-do-arquivo"
+						"description": "Atualiza um artigo existente. Se uma nova imagem for enviada, ela será salva na pasta uploads e o caminho será atualizado no banco. A imagem pode ser acessada via /uploads/nome-do-arquivo"
 					}
 				},
 				{

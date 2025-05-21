@@ -67,7 +67,7 @@ export default class UserController {
   update = async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
-      const { name, email } = req.body;
+      const { name, password } = req.body;
 
       const user = await User.findByPk(id);
       if (!user) {
@@ -75,14 +75,25 @@ export default class UserController {
         return;
       }
 
-      await user.update({ name, email });
+      await user.update({ name, ...(password && { password }) });
+
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'default_secret', {
+        expiresIn: '1d',
+      });
 
       res.json({
-        id: user.id,
-        name: user.name,
-        email: user.email,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+        token,
       });
     } catch (error) {
+      if (error instanceof Error && error.message.includes('senha deve conter')) {
+        res.status(400).json({ message: error.message });
+        return;
+      }
       res.status(500).json({ message: 'Erro ao atualizar usuário', error });
     }
   }

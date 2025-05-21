@@ -13,6 +13,14 @@ class User extends Model {
   public async comparePassword(candidatePassword: string): Promise<boolean> {
     return bcrypt.compare(candidatePassword, this.password);
   }
+
+  static validatePassword(password: string): boolean {
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const hasMinLength = password.length >= 8;
+
+    return hasUpperCase && hasSpecialChar && hasMinLength;
+  }
 }
 
 User.init(
@@ -37,6 +45,13 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        customValidator(value: string) {
+          if (!User.validatePassword(value)) {
+            throw new Error('A senha deve conter pelo menos 8 caracteres, uma letra maiúscula e um caractere especial');
+          }
+        },
+      },
     },
   },
   {
@@ -44,10 +59,8 @@ User.init(
     modelName: 'User',
     hooks: {
       beforeCreate: async (user: User) => {
-        if (user.password) {
-          const salt = await bcrypt.genSalt(10);
-          user.password = await bcrypt.hash(user.password, salt);
-        }
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
       },
       beforeUpdate: async (user: User) => {
         if (user.changed('password')) {
