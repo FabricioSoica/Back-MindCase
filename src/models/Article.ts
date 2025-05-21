@@ -30,6 +30,10 @@ Article.init(
     featuredImage: {
       type: DataTypes.STRING,
       allowNull: true,
+      get() {
+        const rawValue = this.getDataValue('featuredImage');
+        return rawValue ? `/uploads/${rawValue}` : null;
+      }
     },
     userId: {
       type: DataTypes.INTEGER,
