@@ -112,4 +112,26 @@ export default class UserController {
       res.status(500).json({ message: 'Erro ao atualizar usuário', error });
     }
   }
+
+  changePassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email, newPassword } = req.body;
+
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        res.status(404).json({ message: 'Usuário não encontrado' });
+        return;
+      }
+
+      await user.update({ password: newPassword });
+
+      res.json({ message: 'Senha alterada com sucesso' });
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('senha deve conter')) {
+        res.status(400).json({ message: error.message });
+        return;
+      }
+      res.status(500).json({ message: 'Erro ao alterar senha', error });
+    }
+  }
 } 
