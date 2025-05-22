@@ -61,4 +61,4 @@ yarn dev
 
 ## ✨ Autor
 
-Seu Nome - [FabricioSoica](https://github.com/fabriciosoica)
+[FabricioSoica](https://github.com/fabriciosoica)
