@@ -58,6 +58,8 @@ npm run dev
 # ou
 yarn dev
 ```
+##OBS:
+###🔑 Senha de todos usuários: Fabricio1@
 
 ## ✨ Autor
 
