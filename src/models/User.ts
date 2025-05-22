@@ -7,6 +7,7 @@ class User extends Model {
   public name!: string;
   public email!: string;
   public password!: string;
+  public avatar!: string;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
@@ -52,6 +53,10 @@ User.init(
           }
         },
       },
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

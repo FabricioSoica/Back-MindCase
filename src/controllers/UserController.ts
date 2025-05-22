@@ -56,6 +56,7 @@ export default class UserController {
           id: user.id,
           name: user.name,
           email: user.email,
+          avatar: user.avatar,
         },
         token,
       });
@@ -86,7 +87,8 @@ export default class UserController {
       await user.update({ 
         ...(name && { name }), 
         ...(email && { email }), 
-        ...(password && { password }) 
+        ...(password && { password }),
+        ...(req.file && { avatar: req.file.filename })
       });
 
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || 'default_secret', {
@@ -98,6 +100,7 @@ export default class UserController {
           id: user.id,
           name: user.name,
           email: user.email,
+          avatar: user.avatar,
         },
         token,
       });
