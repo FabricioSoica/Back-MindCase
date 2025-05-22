@@ -30,8 +30,8 @@ Thumbs.db
 *.bak
 
 # Arquivos de upload
-uploads/*
-!uploads/.gitkeep
+#uploads/* (removido para demonstração)
+#!uploads/.gitkeep (removido para demonstração)
 
 # Arquivos de teste
 coverage/
