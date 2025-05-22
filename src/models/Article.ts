@@ -35,7 +35,7 @@ Article.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: User,
+        model: 'Users',
         key: 'id',
       },
     },
@@ -46,7 +46,7 @@ Article.init(
   }
 );
 
-// Definindo o relacionamento
+// Define a relação com User
 Article.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Article, { foreignKey: 'userId' });
 

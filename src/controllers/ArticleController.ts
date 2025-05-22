@@ -119,4 +119,23 @@ export default class ArticleController {
       return res.status(500).json({ message: 'Erro ao deletar artigo', error });
     }
   }
+
+  getArticlesByAuthor = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { authorId } = req.params;
+
+      const articles = await Article.findAll({
+        where: { userId: authorId },
+        include: [{
+          model: User,
+          attributes: ['id', 'name', 'email'],
+        }],
+        order: [['createdAt', 'DESC']],
+      });
+
+      res.json(articles);
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao buscar artigos do autor', error });
+    }
+  }
 } 
