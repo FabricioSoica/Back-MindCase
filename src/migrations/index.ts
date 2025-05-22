@@ -5,14 +5,11 @@ import * as createTables from './20240220_create_tables';
 
 async function runMigrations() {
   try {
-    // Primeiro, criar a tabela de migrations se não existir
     await createMigrationsTable.up(sequelize.getQueryInterface());
 
-    // Verificar quais migrations já foram executadas
     const [results] = await sequelize.query('SELECT name FROM Migrations');
     const executedMigrations = results.map((r: any) => r.name);
 
-    // Executar migrations pendentes
     if (!executedMigrations.includes('20240220_create_tables')) {
       console.log('Executando migration: create_tables');
       await createTables.up(sequelize.getQueryInterface());
